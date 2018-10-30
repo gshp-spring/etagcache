@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+
+<body ng-app="myApp">
+
+<p><a href="#/!">Main</a></p>
+
+<a href="#!cache">cache</a>
+<a href="#!greeting1form">greeting1form</a>
+<a href="#!blue">demo2</a>
+
+<div ng-view></div>
+
+<script>
+var app = angular.module("myApp", ["ngRoute"]);
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/t", {
+        templateUrl : "greeting"
+    })
+   /*   .when("/cache", {
+        templateUrl : "getform"
+    }) */
+    .when("/greeting1form", {
+        templateUrl : "greeting1form"
+    }) 
+    .when("/cache", {
+        templateUrl : "getform"
+    });
+});
+
+
+app.controller('myCtrl', function($scope, $http) {
+	 $scope.firstName;
+	 $scope.lastName;
+	 $scope.address;
+  $http.get("/getRecords?name=srihari1")
+  .then(function(response) {
+	  console.log("G SRIHARI")
+      $scope.firstName = response.data;
+      $scope.lastName = response.lastName;
+      $scope.address = response.address;            
+  });
+});
+
+
+app.controller('myCtrl1', function($scope, $http) {
+	 $scope.firstName1;
+	 $scope.lastName1;
+	 $scope.address1;
+ $http.get("/getRecordsGreeting?name=srihari1")
+ .then(function(response) {
+	  console.log("G SRIHARI")
+     $scope.firstName1 = response.data;
+     $scope.lastName1 = response.lastName;
+     $scope.address1 = response.address;            
+ }); 
+});
+</script>
+
+<p>Click on the links to navigate to "red.htm", "green.htm", "blue.htm", or back to "main.htm"</p>
+</body>
+</html>
